@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script th:replace="home-menu::head"></script>
+    <script th:replace="tab-fileUpload::head"></script>
+</head>
+
+<body>
+<div class="wrap">
+    <div th:replace="home-tip::tip"></div>
+    <div th:replace="home-menu::left"></div>
+
+    <div id="right" class="right">
+        <div th:replace="tab-fileUpload::tabFileUpload"></div>
+    </div>
+</div>
+</body>
+<script th:replace="tab-fileUpload::init"></script>
+<script th:replace="tab-fileUpload::table-uploadInfo"></script>
+<script th:replace="tab-fileUpload::upload"></script>
+<script th:replace="tab-fileUpload::reset"></script>
+</html>

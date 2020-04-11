@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script th:replace="home-menu::head"></script>
+</head>
+
+<body>
+<div class="wrap">
+    <div th:replace="home-tip::tip"></div>
+    <div th:replace="home-menu::left"></div>
+
+    <div id="right" class="right">
+        <div th:replace="tab-userInfo::userInfo"></div>
+    </div>
+</div>
+</body>
+</html>

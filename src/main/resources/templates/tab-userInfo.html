@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div id="tabUserInfo" class="tab-pane" th:fragment="userInfo">
+    <div class="card">
+        <div class="card-header userInfoHeader">个人信息</div>
+        <div class="card-body">
+            <form action="/updatePassword" method="post">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <label for="userName">用户名</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="userName" name="userName" th:value="${userName}" readonly/>
+                </div>
+
+                <label for="password">密码</label>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="row  mx-0 justify-content-center ">
+                    <button class="btn btn-primary " type="submit" >提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

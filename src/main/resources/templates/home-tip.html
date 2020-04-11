@@ -1,0 +1,28 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="tip">
+    <strong id="tip" class="tip" th:text="${notice}"></strong>
+    <script th:fragment="showTip">
+        $(document).ready(function() {
+            var msg = $('#tip').text();
+            if(msg!='') {
+                if(msg.indexOf("失败")>-1)
+                    showTip(msg, "danger");
+                else if(msg.indexOf("成功")>-1)
+                    showTip(msg, "success");
+                else
+                    showTip(msg, "info");
+            }
+        });
+        function showTip(tip, type) {
+            var $tip = $('#tip');
+            $tip.stop(true).prop('class', 'alert alert-' + type).text(tip).css('margin-left', - $tip.outerWidth() / 2)
+                .fadeIn(500)
+                .delay(2000)
+                .fadeOut(500);
+        }
+    </script>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div class="modal" id="viewModal" th:fragment="view">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>查看用户</h3>
+                    <button class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="view_id" readonly/>
+                    <input type="text" id="view_username" readonly/>
+                    <div class="col-xs-2" style="margin-top:7px;">
+                        <label class="control-label col-xs-1" for="view_excelhead">表头权限</label>
+                        <div id="view_excelhead" class="card row pre-scrollable" >
+                            <div th:each ="head : ${heads}"
+                                 th:value="${head.id}"
+                                 th:text ="${head.name}" class="card-body"></div>
+                        </div>
+                    </div>
+                    <div class="row  mx-0 justify-content-center ">
+                        <button class="btn btn-primary form-control" type="button" data-dismiss="modal">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:fragment="viewInfo">
+    function getViewInfo(index){
+        var data = JSON.stringify($("#userInfoTable").bootstrapTable('getData')); //获取全部数据
+        var data_json = JSON.parse(data); //data_json和data_json2一样都是json对象
+        //根据index找到对应行数据，填充数据到修改模态框
+        $("#view_id").val(data_json[index].id);
+        $("#view_username").val(data_json[index].username);
+
+        $.ajax({
+            type:"GET",
+            url:"/getUserExcelHeads",
+            data:{"userId":data_json[index].id},
+            success:function(response){
+                $('#view_excelhead div').each(function () {
+                    if (response.indexOf(',' + this.getAttribute('value') + ',') != -1) {
+                        this.setAttribute('class', 'card-body bg-success text-dark');
+                    } else {
+                        this.setAttribute('class', 'card-body');
+                    }
+                });
+            }
+        });
+        $('#viewModal').modal('show');
+    }
+</script>
+</html>

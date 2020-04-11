@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div class="modal" id="addModal" th:fragment="add">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>添加用户</h3>
+                    <button class="close" data-dismiss="modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" th:action="@{/addUser}" id="addForm">
+                        <label for="add_username">用户名</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="add_username" name="add_username" />
+                        </div>
+
+                        <label for="add_password">密码</label>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="add_password" name="add_password">
+                        </div>
+
+                        <div class="col-xs-2" style="margin-top:7px;">
+                            <label class="control-label col-xs-1" for="add_excelhead">表头权限</label>
+                            <input type="hidden" id="add_selectHeads" name="add_selectHeads" />
+                            <select id="add_excelhead" class="selectpicker" style="width:150px" multiple="multiple">
+                                <optgroup label="座便器、小便器、妇洗器、柱盆">
+                                    <option th:each ="head : ${heads}"
+                                           th:value="${head.id}"
+                                           th:text ="${head.name}">
+                                    </option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div class="row  mx-0 justify-content-center ">
+                            <button class="btn btn-primary form-control" type="button" onclick="postAdd()">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script th:fragment="postAdd">
+    function postAdd(){
+        $("#add_selectHeads").val($('#add_excelhead').val());
+        $("#addForm").submit();
+    }
+</script>
+</html>

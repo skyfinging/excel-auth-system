@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script th:replace="home-menu::head"></script>
+    <script th:replace="tab-userManagement::head"></script>
+</head>
+
+<body>
+<div class="wrap">
+    <div th:replace="home-tip::tip"></div>
+    <div th:replace="home-menu::left"></div>
+
+    <div id="right" class="right">
+        <div th:replace="tab-userManagement::userManagement"></div>
+    </div>
+</div>
+</body>
+<script th:replace="tab-userManagement::init"></script>
+<script th:replace="tab-userManagement::table"></script>
+<script th:replace="tab-userManagement-view::viewInfo"></script>
+<script th:replace="tab-userManagement-update::postUpdate"></script>
+<script th:replace="tab-userManagement-add::postAdd"></script>
+</html>

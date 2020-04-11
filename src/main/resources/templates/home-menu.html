@@ -1,0 +1,29 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="head">
+    <meta content="text/html;charset=UTF-8" />
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>文件管理系统</title>
+    <link rel="stylesheet" th:href="@{css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{css/homepage.css}"/>
+
+    <script type="text/javascript" th:src="@{js/popper.min.js}"></script>
+    <script type="text/javascript" th:src="@{js/jquery-3.3.1.js}"></script>
+    <script type="text/javascript" th:src="@{js/bootstrap.js}"></script>
+</head>
+<body>
+<div id="left" class="nav left" th:fragment="left">
+    <div class="logoDiv">
+            <img id="logo" alt="左右布局" src="images/logo.png"
+                 style="height: 28px; padding-left: 15px;vertical-align: middle;">
+            <span style="font-size:18px;" sec:authentication="name"></span>
+            <a href="/logout">退出</a>
+    </div>
+    <div class="menu-title" th:classappend="${menu_active}=='tabUserManagement'?'active':''" onclick="window.location.href='/tabUserManagement'" sec:authorize="hasRole('ROLE_ADMIN')">用户管理</div>
+    <div class="menu-title" th:classappend="${menu_active}=='tabTableHead'?'active':''" onclick="window.location.href='/tabTableHead'" sec:authorize="hasRole('ROLE_ADMIN')">表头管理</div>
+    <div class="menu-title" th:classappend="${menu_active}=='tabUserInfo'?'active':''" onclick="window.location.href='/tabUserInfo'">个人信息</div>
+    <div class="menu-title" th:classappend="${menu_active}=='home'?'active':''" onclick="window.location.href='/home'">文件管理</div>
+</div>
+</body>
+</html>

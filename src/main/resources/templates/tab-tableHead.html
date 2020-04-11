@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:fragment="head">
+    <link rel="stylesheet" th:href="@{css/fileinput.min.css}">
+    <link rel="stylesheet" th:href="@{css/bootstrap-table.css}">
+    <link rel="stylesheet" th:href="@{css/bootstrap-select.css}">
+    <link rel="stylesheet" th:href="@{css/fonts.css}">
+
+    <script type="text/javascript" th:src="@{js/fileinput.js}"></script>
+    <script type="text/javascript" th:src="@{js/locales/zh.js}"></script>
+    <script type="text/javascript" th:src="@{js/bootstrap-table.js}"></script>
+    <script type="text/javascript" th:src="@{js/bootstrap-select.js}"></script>
+    <script type="text/javascript" th:src="@{js/locales/bootstrap-table-zh-CN.js}"></script>
+</head>
+<body>
+<div id="tableHead" class="tab-pane" sec:authorize="hasRole('ROLE_ADMIN')" th:fragment="tableHead">
+    <div class="dowonloadDiv ">
+    </div>
+
+    <div class="fixed-table-toolbar row" style="margin-left:0px;">
+        <div class="search pull-left">
+            <input id="search-name" class="form-control" placeholder="请输入字段名查询">
+        </div>
+        <div class="columns columns-left btn-group pull-left">
+            <button id="search-button" type="button" class="btn btn-primary">查询</button>
+        </div>
+        <div class="columns columns-right btn-group pull-right">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">新增</button>
+        </div>
+    </div>
+
+    <div class="mytable">
+        <table id="headTable" border="1"></table>
+    </div>
+
+    <div th:replace="tab-tableHead-update::update"></div>
+    <div th:replace="tab-tableHead-add::add"></div>
+
+</div>
+</body>
+<script th:fragment="init">
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $(document).ajaxSend(function(e, xhr, options) {
+        xhr.setRequestHeader(header, token);
+    });
+    $(document).ready(function() {
+        initTable();
+    });
+    $("#search-button").click(function () {
+        $('#headTable').bootstrapTable(('refresh'));
+    });
+
+</script>
+<script th:fragment="table">
+    function initTable() {
+        $('#headTable').bootstrapTable({
+            url:"/getHeadList",
+            method:"post",
+            striped:true,
+            contentType: "application/json",//请求数据内容格式 默认是 application/json 自己根据格式自行服务端处理
+            dataType: "json",//期待返回数据类型
+            sidePagination:"server",
+            pagination:true,
+            classes: "table table-bordered table-striped table-sm",
+            queryParams : function (params) {//上传服务器的参数
+                var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
+                    pageSize : params.limit, // 每页显示数量
+                    offset : params.offset, // SQL语句起始索引
+                    pageIndex: (params.offset / params.limit),
+                    search_name: $('#search-name').val()
+                };
+                return temp;
+            },
+            responseHandler:function (res) {
+                return res;
+            },
+            columns:[
+                {
+                    checkbox:true  //第一列显示复选框
+                },
+                {field:"id", title:"ID", visible: false},
+                {field:"name", title:"表头"},
+                {
+                    field: 'operate',
+                    title: '操作',
+                    width: 150,
+                    align: 'center',
+                    valign: 'middle',
+                    formatter: actionFormatter
+                }
+            ]
+        })
+    }
+    function actionFormatter(value, row, index) {
+        var id = index;
+        var result = "";
+        result += "<a href='javascript:;' class='btn btn-xs blue' onclick=\"getUpdateInfo('" + id + "')\" title='编辑'><span class='glyphicon glyphicon-pencil'></span></a>";
+        result += "<a href='javascript:;' class='btn btn-xs red' onclick=\"deleteByIds('" + row.id + "')\" title='删除'><span class='glyphicon glyphicon-remove'></span></a>";
+        return result;
+    }
+    function deleteByIds(value) {
+        window.location.href="/delHead?id="+value;
+    }
+</script>
+</html>

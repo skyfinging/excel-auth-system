@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script th:replace="home-menu::head"></script>
+    <script th:replace="tab-tableHead::head"></script>
+</head>
+
+<body>
+<div class="wrap">
+    <div th:replace="home-tip::tip"></div>
+    <div th:replace="home-menu::left"></div>
+    <div id="right" class="right">
+        <div th:replace="tab-tableHead::tableHead"></div>
+    </div>
+</div>
+</body>
+<script th:replace="tab-tableHead::init"></script>
+<script th:replace="tab-tableHead::table"></script>
+<script th:replace="tab-tableHead-update::postUpdate"></script>
+</html>
