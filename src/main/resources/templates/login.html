@@ -45,16 +45,16 @@
             <div class="starter-template">
                 <p th:if="${param.logout}" class="bg-warning"> 已成功注销</p>
                 <p th:if="${param.error}" class="bg-danger" th:text="${session?.SPRING_SECURITY_LAST_EXCEPTION?.message}"></p>
-                <h3 class="form-title font-weight-bold">登&nbsp;&nbsp;&nbsp;&nbsp;录</h3>
+                <h3 class="form-title font-weight-bold" th:text="#{login.tip}">登&nbsp;&nbsp;&nbsp;&nbsp;录</h3>
                 <form name="form" th:action="@{/login}" action="/login" method="POST">
                     <div class="input-group input-group-lg my-group">
-                        <input type="text" class="form-control" id="username" name="username" value="" placeholder="账号" />
+                        <input type="text" class="form-control" id="username" name="username" value="" placeholder="账号" th:placeholder="#{login.username}"/>
                     </div>
                     <div class="input-group input-group-lg my-group">
-                        <input type="password" class="form-control" id="password" name="password" placeholder="密码"/>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码" th:placeholder="#{login.password}"/>
                     </div>
                     <div class="input-group input-group-lg my-group">
-                        <input type="text" class="form-control" name="validateCode" id="validateCode" required="required" placeholder="验证码">
+                        <input type="text" class="form-control" name="validateCode" id="validateCode" required="required" placeholder="验证码" th:placeholder="#{login.validateCode}">
                         <img src="get-validate-code" title="看不清，请点我" onclick="refresh(this)" />
                     </div>
                     <input type="submit" id="login" value="Login" class="btn btn-primary form-control"/>

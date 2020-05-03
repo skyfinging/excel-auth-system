@@ -1,5 +1,6 @@
 package demo.config;
 
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -26,7 +27,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
      * 定义国际化信息
      * @return
      */
-    @Bean
+//    @Bean
     public ReloadableResourceBundleMessageSource messageSource(){
         ReloadableResourceBundleMessageSource reloadableResourceBundleMessageSource = new ReloadableResourceBundleMessageSource();
         reloadableResourceBundleMessageSource.setBasename("classpath:messages");
